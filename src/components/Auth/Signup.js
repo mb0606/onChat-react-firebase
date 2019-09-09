@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import firebase from "../../firebase";
 import { Grid, Form, Segment, Button, Header, Message, Image } from "semantic-ui-react";
-import logo from "../../logo-image.jpg";
+import logo from "../../logo-2.jpg";
 import md5 from 'md5';
 import "./Auth.css"
 

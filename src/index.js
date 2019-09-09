@@ -6,6 +6,7 @@ import SignIn from "./components/Auth/SignIn";
 import firebase from "./firebase";
 
 import 'semantic-ui-css/semantic.min.css'
+import Spinner from "./Spinner"
 
 // Setup routing
 import { withRouter } from "react-router";
@@ -15,6 +16,7 @@ import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
 import { setUser } from "./actions"
+
 
 const store = createStore(rootReducer, composeWithDevTools());
 
