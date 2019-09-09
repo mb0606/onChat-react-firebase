@@ -10,6 +10,11 @@ import 'semantic-ui-css/semantic.min.css'
 // Setup routing
 import { withRouter } from "react-router";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+const store = createStore(() => { }, composeWithDevTools());
 
 // Create Stateless functional component for routes
 class Root extends React.Component {
@@ -36,9 +41,11 @@ class Root extends React.Component {
 const RootWithAuth = withRouter(Root);
 // Render Root instead of App (App is route /)
 ReactDOM.render(
-  <Router>
-    <RootWithAuth />
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <RootWithAuth />
+    </Router>
+  </Provider>,
   document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
