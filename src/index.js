@@ -8,29 +8,38 @@ import firebase from "./firebase";
 import 'semantic-ui-css/semantic.min.css'
 
 // Setup routing
+import { withRouter } from "react-router";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Create Stateless functional component for routes
 class Root extends React.Component {
   componentDidMount() {
-
+    // listener to detect user in my app
+    firebase.auth().onAuthStateChanged(user => {
+      this.props.history.push("/");
+    })
   }
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/signin" component={SignIn} />
-        </Switch>
-      </Router>
+
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/signin" component={SignIn} />
+      </Switch>
+
     );
   }
 }
 
-
+// higher order component
+const RootWithAuth = withRouter(Root);
 // Render Root instead of App (App is route /)
-ReactDOM.render(<Root />, document.getElementById("root"));
+ReactDOM.render(
+  <Router>
+    <RootWithAuth />
+  </Router>,
+  document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
