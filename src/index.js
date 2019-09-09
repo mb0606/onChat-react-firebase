@@ -11,21 +11,25 @@ import 'semantic-ui-css/semantic.min.css'
 import { withRouter } from "react-router";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createStore } from "redux";
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./reducers";
+import { setUser } from "./actions"
 
-const store = createStore(() => { }, composeWithDevTools());
+const store = createStore(rootReducer, composeWithDevTools());
 
 // Create Stateless functional component for routes
 class Root extends React.Component {
   componentDidMount() {
+    console.log(this.props.isLoading)
     // listener to detect user in my app
     firebase.auth().onAuthStateChanged(user => {
+      this.props.setUser(user);
       this.props.history.push("/");
     })
   }
   render() {
-    return (
+    return this.props.isLoading ? <Spinner /> : (
 
       <Switch>
         <Route exact path="/" component={App} />
@@ -36,9 +40,12 @@ class Root extends React.Component {
     );
   }
 }
+const mapStateFromProps = state => ({
+  isLoading: state.user.isLoading
+});
 
 // higher order component
-const RootWithAuth = withRouter(Root);
+const RootWithAuth = withRouter(connect(mapStateFromProps, { setUser })(Root));
 // Render Root instead of App (App is route /)
 ReactDOM.render(
   <Provider store={store}>
@@ -48,6 +55,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root"));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
