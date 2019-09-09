@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import SignUp from "./components/Auth/SignUp";
 import SignIn from "./components/Auth/SignIn";
+import firebase from "./firebase";
 
 import 'semantic-ui-css/semantic.min.css'
 
@@ -10,15 +11,23 @@ import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Create Stateless functional component for routes
-const Root = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/" component={App} />
-      <Route path="/signup" component={SignUp} />
-      <Route path="/signin" component={SignIn} />
-    </Switch>
-  </Router>
-);
+class Root extends React.Component {
+  componentDidMount() {
+
+  }
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/signin" component={SignIn} />
+        </Switch>
+      </Router>
+    );
+  }
+}
+
 
 // Render Root instead of App (App is route /)
 ReactDOM.render(<Root />, document.getElementById("root"));
