@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import firebase from "../../firebase";
 import { Grid, Form, Segment, Button, Header, Message, Image } from "semantic-ui-react";
-import logo from "../../logo-2.jpg";
+import logo from "../../logo-5.png";
 import "./Auth.css"
 
 class SignIn extends React.Component {
@@ -52,9 +52,6 @@ class SignIn extends React.Component {
             <Grid textAlign="center" verticalAlign='middle' className="app">
                 <Grid.Column style={{ maxWidth: 450 }}>
                     <Image src={logo} centered size="small" />
-                    <Header as='h1' textAlign="center">
-                        ONCHAT
-          </Header>
                     <Header as='h2' textAlign="center">
                         Sign In
           </Header>

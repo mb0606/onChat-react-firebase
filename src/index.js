@@ -15,7 +15,7 @@ import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
-import { setUser } from "./actions"
+import { setUser, clearUser } from "./actions"
 
 
 const store = createStore(rootReducer, composeWithDevTools());
@@ -26,8 +26,13 @@ class Root extends React.Component {
     console.log(this.props.isLoading)
     // listener to detect user in my app
     firebase.auth().onAuthStateChanged(user => {
-      this.props.setUser(user);
-      this.props.history.push("/");
+      if (user) {
+        this.props.setUser(user);
+        this.props.history.push("/");
+      } else {
+        this.props.history.push('/signin');
+        this.props.clearUser();
+      }
     })
   }
   render() {
@@ -47,7 +52,7 @@ const mapStateFromProps = state => ({
 });
 
 // higher order component
-const RootWithAuth = withRouter(connect(mapStateFromProps, { setUser })(Root));
+const RootWithAuth = withRouter(connect(mapStateFromProps, { setUser, clearUser })(Root));
 // Render Root instead of App (App is route /)
 ReactDOM.render(
   <Provider store={store}>
