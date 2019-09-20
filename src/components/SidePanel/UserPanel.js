@@ -42,7 +42,7 @@ class UserPanel extends React.Component {
                         <Image src={logoBlk} size='tiny' />
                     </Grid.Row>
                     {/* User Dropdown */}
-                    <Grid.Row style={{ padding: "0.2em 1.7em 3.5em 2.7em", margin: 0 }}>
+                    <Grid.Row style={{ padding: "0.2em 1.7em 5em 2.7em", margin: 0 }}>
                         <Header floated="left" style={{ padding: "0.35" }} as="h4">
                             <Dropdown trigger={
                                 <span>
