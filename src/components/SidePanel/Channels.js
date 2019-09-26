@@ -18,6 +18,9 @@ class Channels extends React.Component {
     componentDidMount() {
         this.addListeners();
     }
+    componentWillUnmount() {
+        this.removeListeners();
+    }
 
     addListeners = () => {
         let loadedChannels = [];
@@ -26,10 +29,14 @@ class Channels extends React.Component {
             this.setState({ channels: loadedChannels }, () => this.setDefaultChannel());
         })
     }
+    removeListeners = () => {
+        this.state.channelsRef.off();
+    }
     setDefaultChannel = () => {
         const defaultChannel = this.state.channels[0];
         if (this.state.firstLoad && this.state.channels.length > 0) {
             this.props.setCurrentChannel(defaultChannel);
+            this.setActiveChannel(defaultChannel)
         }
         this.setState({ firstLoad: false })
     }
