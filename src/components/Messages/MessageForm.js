@@ -11,7 +11,7 @@ class MessageForm extends React.Component {
         errors: [],
     }
     handlesChange = event => {
-        this.setState({ [event.tartget.name]: event.target.value })
+        this.setState({ [event.target.name]: event.target.value })
     }
     createMessage = () => {
         const message = {
@@ -46,10 +46,16 @@ class MessageForm extends React.Component {
                         error: this.state.errors.concat(err),
                     })
                 })
+        } else {
+            console.log("errors")
+            this.setState({
+                errors: this.state.errors.concat({ message: "Add a message" })
+            })
         }
     }
 
     render() {
+        const { errors } = this.state;
         return (
             <Segment className="message__form">
                 <Input
@@ -58,6 +64,11 @@ class MessageForm extends React.Component {
                     onChange={this.handlesChange}
                     style={{ marginBottom: '0.7em' }}
                     labelPosition="left"
+                    label={<Button icon={"add"} />}
+                    className={errors.some(error => error.message.includes('message'))
+                        ? "error"
+                        : ""
+                    }
                     placeholder="Let people know what you are thinking"
                 />
                 <Button.Group icon widths="2">
