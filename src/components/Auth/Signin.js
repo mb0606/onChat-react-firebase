@@ -54,7 +54,7 @@ class SignIn extends React.Component {
                     <Image src={logo} centered size="small" />
                     <Header as='h2' textAlign="center">
                         Sign In
-          </Header>
+                    </Header>
                     {this.state.errors.length > 0 && (
                         <Message error>
                             <h3>Error</h3>
@@ -83,7 +83,7 @@ class SignIn extends React.Component {
                                 content='Submit'
                                 primary size="large" />
                         </Segment>
-                        <Message>Dont't have an accoutn?  <Link to="/signup"> Sign Up</Link></Message>
+                        <Message>Dont't have an account?  <Link to="/signup"> Sign Up</Link></Message>
                     </Form>
 
                 </Grid.Column>

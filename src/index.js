@@ -26,6 +26,7 @@ class Root extends React.Component {
     console.log(this.props.isLoading)
     // listener to detect user in my app
     firebase.auth().onAuthStateChanged(user => {
+
       if (user) {
         this.props.setUser(user);
         this.props.history.push("/");
@@ -55,7 +56,7 @@ const mapStateFromProps = state => ({
 const RootWithAuth = withRouter(connect(mapStateFromProps, { setUser, clearUser })(Root));
 // Render Root instead of App (App is route /)
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store} >
     <Router>
       <RootWithAuth />
     </Router>
