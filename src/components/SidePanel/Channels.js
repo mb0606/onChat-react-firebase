@@ -45,7 +45,7 @@ class Channels extends React.Component {
         this.setActiveChannel(channel);
         // get from redux
         this.props.setCurrentChannel(channel);
-	this.prop.isPrivateChannel(false);
+	this.props.setPrivateChannel(false);
     }
     setActiveChannel = channel => {
         this.setState({ activeChannel: channel.id })
