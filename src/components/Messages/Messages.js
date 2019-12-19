@@ -10,6 +10,7 @@ class Messages extends React.Component {
         messagesRef: firebase.database().ref('messages'),
         channel: this.props.currentChannel,
         user: this.props.currentUser,
+        isChannelStarred: false,
         messages: [],
         messagesLoading: true,
         numUniqueUsers: '',
@@ -60,6 +61,20 @@ class Messages extends React.Component {
         this.setState({ searchResults })
         setTimeout(() => this.setState({ searchLoading: false }), 500)
     }
+
+    handleStar = () => {
+        this.setState(prevState => ({
+            isChannelStarred: !prevState.isChannelStarred
+        }), () => this.starChannel());
+
+    }
+    starChannel = () => {
+        if (this.state.isChannelStarred) {
+            console.log("start");
+        } else {
+            console.log("unstar");
+        }
+    }
     handleSearchChange = event => {
         this.setState({
             searchTerm: event.target.value,
@@ -89,7 +104,8 @@ class Messages extends React.Component {
     }
 
     render() {
-        const { messagesRef, channel, user, messages, privateChannel, numUniqueUsers, searchTerm, searchResults, searchLoading } = this.state;
+        const { messagesRef, channel, user, messages, privateChannel,
+            numUniqueUsers, searchTerm, searchResults, isChannelStarred, searchLoading } = this.state;
         return (
             <React.Fragment>
                 <MessagesHeader
@@ -98,6 +114,8 @@ class Messages extends React.Component {
                     handleSearchChange={this.handleSearchChange}
                     searchLoading={searchLoading}
                     isPrivateChannel={privateChannel}
+                    handleStar={this.handleStar}
+                    isChannelStarred={isChannelStarred}
                 />
 
                 <Segment>
