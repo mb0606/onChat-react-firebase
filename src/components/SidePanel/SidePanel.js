@@ -16,7 +16,7 @@ class SidePanel extends React.Component {
                 style={{ backgroundImage: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)", font: "1.2rem" }}
             >
                 <UserPanel currentUser={currentUser} />
-                <Starred />
+                <Starred currentUser={currentUser} />
                 <Channels currentUser={currentUser} />
                 <DirectMessages currentUser={currentUser} />
 
