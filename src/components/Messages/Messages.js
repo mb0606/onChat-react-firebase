@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { Segment, Comment } from "semantic-ui-react";
 import MessageForm from "./MessageForm";
 import MessagesHeader from "./MessagesHeader";
-import Message from "./Message"
-import { setUserPosts } from "../../actions"
-import firebase from "../../firebase"
+import Message from "./Message";
+import Type from "./Typing"
+import { setUserPosts } from "../../actions";
+import firebase from "../../firebase";
 
 class Messages extends React.Component {
     state = {
@@ -183,6 +184,10 @@ class Messages extends React.Component {
                             this.displayMessages(searchResults) :
                             this.displayMessages(messages)
                         }
+                        <div style={{ dislay: "flex", alignItems: "center" }}>
+                            <span className="user__typing"> marco is typing</span>
+                            <Type />
+                        </div>
                     </Comment.Group>
                 </Segment>
 

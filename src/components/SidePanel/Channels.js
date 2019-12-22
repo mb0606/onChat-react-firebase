@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Icon,Label, Modal, Form, Input, Button } from "semantic-ui-react";
+import { Menu, Icon, Label, Modal, Form, Input, Button } from "semantic-ui-react";
 import firebase from "../../firebase";
 import { connect } from "react-redux"
 import { setCurrentChannel, setPrivateChannel } from "../../actions"
@@ -14,12 +14,13 @@ class Channels extends React.Component {
         channelDetails: "",
         channelsRef: firebase.database().ref("channels"),
         messagesRef: firebase.database().ref("messages"),
+        typingRef: firebase.database().ref('typing'),
         notifications: [],
         modal: false,
         firstLoad: true,
     }
     componentDidMount() {
-     this.addListeners();
+        this.addListeners();
     }
     componentWillUnmount() {
         this.removeListeners();
@@ -76,13 +77,17 @@ class Channels extends React.Component {
         if (this.state.firstLoad && this.state.channels.length > 0) {
             this.props.setCurrentChannel(defaultChannel);
             this.setActiveChannel(defaultChannel);
-	    this.setState({channel: defaultChannel});
+            this.setState({ channel: defaultChannel });
         }
         this.setState({ firstLoad: false })
     }
     changeChannel = channel => {
         // to set active on menu item
         this.setActiveChannel(channel);
+        this.state.typingRef
+            .child(this.state.channel.id)
+            .child(this.state.user.uid)
+            .remove()
         this.clearNotifications();
         // get from redux
         this.props.setCurrentChannel(channel);
@@ -93,7 +98,7 @@ class Channels extends React.Component {
     clearNotifications = () => {
         let index = this.state.notifications.findIndex(notification => notification.id === this.state.channel.id);
 
-        if(index !== -1) {
+        if (index !== -1) {
             let updatedNotifications = [...this.state.notifications];
             updatedNotifications[index].total = this.state.notifications[index].lastKnownTotal;
             updatedNotifications[index].count = 0;
@@ -105,15 +110,15 @@ class Channels extends React.Component {
     }
 
     getNotificationCount = channel => {
-    	let count = 0;
+        let count = 0;
 
-	this.state.notifications.forEach(notification => {
-	    if(notification.id === channel.id) {
-	       count = notification.count;
-	       }
-	       });
-	if(count > 0) return count;
-    
+        this.state.notifications.forEach(notification => {
+            if (notification.id === channel.id) {
+                count = notification.count;
+            }
+        });
+        if (count > 0) return count;
+
     }
 
     displayChannels = (channels) => {
@@ -125,9 +130,9 @@ class Channels extends React.Component {
                 style={{ opacity: 0.8 }}
                 active={channel.id === this.state.activeChannel}
             >
-	    {this.getNotificationCount(channel) && (
-			    <Label color="red">{this.getNotificationCount(channel)}</Label>
-			    )}
+                {this.getNotificationCount(channel) && (
+                    <Label color="red">{this.getNotificationCount(channel)}</Label>
+                )}
                 # {channel.name}
             </Menu.Item>
         ))

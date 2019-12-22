@@ -77,16 +77,17 @@ class DirectMessages extends React.Component {
         }
         this.props.setCurrentChannel(channelData);
         this.props.setPrivateChannel(true);
-	this.setActiveChannel(user.uid);
+        this.setActiveChannel(user.uid);
     }
 
     getChannelId = userId => {
         const currentUserId = this.state.user.uid;
+        // check user ids and create a link with the lesser of the two first
         return userId < currentUserId ? `${userId}/${currentUserId}` : `${currentUserId}/${userId}`;
     }
 
     setActiveChannel = userId => {
-	    this.setState({activeChannel: userId});
+        this.setState({ activeChannel: userId });
     }
     render() {
         const { users, activeChannel } = this.state;
@@ -102,7 +103,7 @@ class DirectMessages extends React.Component {
                 {users.map(user => (
                     <Menu.Item
                         key={user.uid}
-			active={user.uid === activeChannel}
+                        active={user.uid === activeChannel}
                         onClick={() => this.changeChannel(user)}
                         style={{ opacity: 0.7, fontStyle: "italic" }}
                     >
