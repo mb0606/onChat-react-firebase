@@ -3,7 +3,8 @@ import {
     SET_USER, CLEAR_USER,
     SET_PRIVATE_CHANNEL,
     SET_CURRENT_CHANNEL,
-    SET_USER_POSTS
+    SET_USER_POSTS,
+    SET_COLORS
 } from "../actions/types";
 
 
@@ -57,8 +58,28 @@ const channel_reducer = (state = INIT_STATE_CHANNEL, action) => {
     }
 }
 
+const INIT_STATE_COlORS = {
+    primaryColor: "000",
+    secondaryColor: "eee"
+}
+
+const colors_reducer = (state = INIT_STATE_COlORS, action) => {
+    switch (action.type) {
+        case SET_COLORS:
+            return {
+                primaryColor: action.payload.primaryColor,
+                secondaryColor: action.payload.secondaryColor
+            }
+        default: {
+            return state;
+        }
+    }
+
+}
+
 const rootReducer = combineReducers({
     user: user_reducer,
     channel: channel_reducer,
+    colors: colors_reducer
 })
 export default rootReducer;

@@ -7,4 +7,5 @@ export const SET_CURRENT_CHANNEL = "SET_CURRENT_CHANNEL";
 export const SET_PRIVATE_CHANNEL = "SER_PRIVATE_CHANNEL";
 export const SET_USER_POSTS = "SET_USER_POSTS";
 
-
+// Colors Action types
+export const SET_COLORS = "SET_COLORS";

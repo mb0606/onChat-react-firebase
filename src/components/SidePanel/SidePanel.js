@@ -7,13 +7,13 @@ import Starred from "./Starred"
 
 class SidePanel extends React.Component {
     render() {
-        const { currentUser } = this.props;
+        const { currentUser, primaryColor } = this.props;
         return (
             <Menu
                 size="large"
                 fixed="left"
                 vertical
-                style={{ backgroundImage: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)", font: "1.2rem" }}
+                style={{ backgroundImage: `linear-gradient(120deg, ${primaryColor} 0%, #ebedee 100%)`, font: "1.2rem" }}
             >
                 <UserPanel currentUser={currentUser} />
                 <Starred currentUser={currentUser} />
