@@ -35,6 +35,16 @@ class Messages extends React.Component {
             this.addUserStarsListener(channel.id, user.uid);
         }
     }
+
+    componentDidUpdate(preProps, prevState) {
+        if (this.messagesEnd) {
+            this.scrollToBottom();
+        }
+    }
+
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
     addUserStarsListener = (channelId, userId) => {
         this.state.usersRef
             .child(userId)
@@ -232,6 +242,7 @@ class Messages extends React.Component {
                             this.displayMessages(messages)
                         }
                         {this.displayTypingUsers(typingUsers)}
+                        <div ref={node => (this.messagesEnd = node)}></div>
                     </Comment.Group>
                 </Segment>
 
