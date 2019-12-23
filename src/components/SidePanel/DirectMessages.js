@@ -38,7 +38,6 @@ class DirectMessages extends React.Component {
                 user["uid"] = snap.key;
                 user["status"] = "offline";
                 loadedUsers.push(user);
-                console.log("this is loaded users :", loadedUsers)
                 this.setState({ users: loadedUsers });
             }
         });

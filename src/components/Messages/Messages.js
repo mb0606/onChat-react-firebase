@@ -34,7 +34,6 @@ class Messages extends React.Component {
         if (channel && user) {
             this.removeListeners(listeners);
             this.addListeners(channel.id);
-            console.log("this is the user =====> ", user)
             this.addUserStarsListener(channel.id, user.uid);
         }
     }
@@ -136,7 +135,6 @@ class Messages extends React.Component {
         ref.child(channelId)
             .on('child_added', snap => {
                 loadedMessages.push(snap.val());
-                //console.log("Messages from firebase ", loadedMessages);
                 this.setState({
                     messages: loadedMessages,
                     messagesLoading: false,

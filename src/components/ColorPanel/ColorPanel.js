@@ -35,7 +35,6 @@ class ColorPanel extends React.Component {
             .child(`${userId}/colors`)
             .on("child_added", snap => {
                 userColors.unshift(snap.val());
-                console.log("color panel Usercolor : ", userColors);
                 this.setState({ userColors });
             })
     }
@@ -62,7 +61,6 @@ class ColorPanel extends React.Component {
                 secondary
             })
             .then(() => {
-                console.log("Colors Added");
                 this.closeModal();
             })
             .catch(err => console.error(err));

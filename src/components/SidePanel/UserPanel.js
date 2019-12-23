@@ -107,7 +107,6 @@ class UserPanel extends React.Component {
 
     render() {
         const { user, modal, previewImage, croppedImage } = this.state;
-        console.log(this.props.currentUser)
         return (
             <Grid style={{ background: "$ddd" }}>
                 <Grid.Column>

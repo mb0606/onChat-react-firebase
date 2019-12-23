@@ -159,7 +159,6 @@ class Channels extends React.Component {
             .then(() => {
                 this.setState({ channelName: "", channelDetails: "" });
                 this.closeModal();
-                console.log("created new channel");
 
             })
             .catch(err => {

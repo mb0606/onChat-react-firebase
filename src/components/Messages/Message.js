@@ -6,7 +6,6 @@ const isOwnMessage = (message, user) => {
     return message.user.id === user.uid ? "message__self" : "";
 }
 const timeFromNow = timestamp => {
-    console.log("IN display Message")
     moment(timestamp).fromNow();
 }
 
@@ -18,7 +17,6 @@ const isImage = (message) => {
 
 const Message = ({ message, user }) => (
     <Comment>
-        {console.log(message)}
         <Comment.Avatar src={message.user.avatar} />
         <Comment.Content className={isOwnMessage(message, user)}>
             <Comment.Author as="a">{message.user.name}</Comment.Author>
