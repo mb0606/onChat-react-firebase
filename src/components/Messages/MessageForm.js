@@ -51,6 +51,28 @@ class MessageForm extends React.Component {
     this.setState({ emojiPicker: !this.state.emojiPicker })
   }
 
+  handleAddEmoji = emoji => {
+    const oldMessage = this.state.message;
+    const newMessage = this.colonToUnicode(`${oldMessage} ${emoji.colons}`);
+    this.setState({ message: newMessage, emojiPicker: false });
+    setTimeout(() => this.messageInputRef.focus(), 0);
+  }
+
+  colonToUnicode = message => {
+    return message.replace(/:[A-Za-z0-9_+-]+:/g, x => {
+      x = x.replace(/:/g, "");
+      let emoji = emojiIndex.emojis[x];
+      if (typeof emoji !== "undefined") {
+        let unicode = emoji.native;
+        if (typeof unicode !== "undefined") {
+          return unicode;
+        }
+      }
+      x = ":" + x + ":";
+      return x;
+    });
+  }
+
   createMessage = (fileUrl = null) => {
     const message = {
       timestamp: firebase.database.ServerValue.TIMESTAMP,
@@ -97,7 +119,7 @@ class MessageForm extends React.Component {
       });
     }
   };
-
+  // used in uploadFile to create path for media based on private or public chat
   getPath = () => {
     if (this.props.isPrivateChannel) {
       return `chat/private-${this.state.channel.id}`;
@@ -181,16 +203,23 @@ class MessageForm extends React.Component {
             className="emojipicker"
             title="Pick your emoji"
             emoji="point_up"
+            onSelect={this.handleAddEmoji}
           />
         )}
         <Input
           fluid
+          ref={node => (this.messageInputRef = node)}
           name="message"
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           value={message}
           style={{ marginBottom: "0.7em" }}
-          label={<Button icon={"smile"} onClick={this.handleTogglePicker} />}
+          label={
+            <Button icon={emojiPicker ? "close " : "smile"}
+              content={emojiPicker ? "Close " : null}
+              onClick={this.handleTogglePicker}
+
+            />}
           labelPosition="left"
           className={
             errors.some(error => error.message.includes("message"))
@@ -217,6 +246,7 @@ class MessageForm extends React.Component {
             icon="cloud upload"
           />
         </Button.Group>
+
         <FileModal
           modal={modal}
           closeModal={this.closeModal}
