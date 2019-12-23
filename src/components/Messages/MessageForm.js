@@ -24,6 +24,13 @@ class MessageForm extends React.Component {
     emojiPicker: false
   };
 
+  componentWillUnmount() {
+    if (this.state.uploadTask !== null) {
+      this.state.uploadTask.cancel();
+      this.setState({ uploadTask: null });
+    }
+  }
+
   openModal = () => this.setState({ modal: true });
 
   closeModal = () => this.setState({ modal: false });
@@ -126,7 +133,7 @@ class MessageForm extends React.Component {
   // used in uploadFile to create path for media based on private or public chat
   getPath = () => {
     if (this.props.isPrivateChannel) {
-      return `chat/private-${this.state.channel.id}`;
+      return `chat/private/${this.state.channel.id}`;
     } else {
       return 'chat/public';
     }
@@ -196,8 +203,8 @@ class MessageForm extends React.Component {
   };
 
   render() {
-    // prettier-ignore
-    const { errors, message, loading, modal, uploadState, percentUploaded, emojiPicker } = this.state;
+    const { errors, message, loading, modal,
+      uploadState, percentUploaded, emojiPicker } = this.state;
 
     return (
       <Segment className="message__form">
