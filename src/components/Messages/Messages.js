@@ -4,7 +4,8 @@ import { Segment, Comment } from "semantic-ui-react";
 import MessageForm from "./MessageForm";
 import MessagesHeader from "./MessagesHeader";
 import Message from "./Message";
-import Type from "./Typing"
+import Type from "./Typing";
+import Skeleton from "./Skeleton"
 import { setUserPosts } from "../../actions";
 import firebase from "../../firebase";
 
@@ -217,11 +218,21 @@ class Messages extends React.Component {
         ))
     }
 
+    displayMessageSkeleton = loading => (
+        loading ? (
+            <React.Fragment>
+                {[...Array(10)].map((_, i) => (
+                    <Skeleton key={i} />
+                ))}
+            </React.Fragment>
+        ) : null
+    )
+
     render() {
         const {
             messagesRef, channel, user, messages, privateChannel,
             numUniqueUsers, searchTerm, searchResults, isChannelStarred,
-            searchLoading, typingUsers
+            searchLoading, typingUsers, messagesLoading
         } = this.state;
         return (
             <React.Fragment >
@@ -237,6 +248,7 @@ class Messages extends React.Component {
 
                 <Segment>
                     <Comment.Group className="messages">
+                        {this.displayMessageSkeleton(messagesLoading)}
                         {searchTerm ?
                             this.displayMessages(searchResults) :
                             this.displayMessages(messages)
